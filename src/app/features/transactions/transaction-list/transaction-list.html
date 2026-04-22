@@ -1,0 +1,49 @@
+<h2>Your Transactions</h2>
+
+@if (transactions.length === 0) {
+  <p>No transactions found.</p>
+}
+
+@for (t of transactions; track t.id) {
+  <div class="card">
+
+    <p><strong>Amount:</strong> {{ t.amount }}</p>
+    <p><strong>Category:</strong> {{ t.category }}</p>
+    <p><strong>Date:</strong> {{ t.date }}</p>
+    <p><strong>Notes:</strong> {{ t.notes }}</p>
+    <p><strong>Type:</strong> {{ t.type }}</p>
+
+    <button (click)="editTransaction(t)">
+      Edit
+    </button>
+
+    <button (click)="deleteTransaction(t.id!)">
+      Delete
+    </button>
+
+  </div>
+}
+
+<hr />
+
+@if (selectedTransaction) {
+  <h3>Edit Transaction</h3>
+
+  <input type="number" [(ngModel)]="selectedTransaction.amount" />
+  <input type="text" [(ngModel)]="selectedTransaction.category" />
+  <input type="date" [(ngModel)]="selectedTransaction.date" />
+  <input type="text" [(ngModel)]="selectedTransaction.notes" />
+
+  <select [(ngModel)]="selectedTransaction.type">
+    <option value="income">Income</option>
+    <option value="expense">Expense</option>
+  </select>
+
+  <button (click)="updateTransaction()">
+    Save Changes
+  </button>
+
+  <button (click)="selectedTransaction = null">
+    Cancel
+  </button>
+}

@@ -1,0 +1,37 @@
+<h2>Add Transaction</h2>
+
+<div class="form">
+
+  <input
+    type="number"
+    placeholder="Amount"
+    [(ngModel)]="amount"
+  />
+
+  <input
+    type="text"
+    placeholder="Category"
+    [(ngModel)]="category"
+  />
+
+  <input
+    type="date"
+    [(ngModel)]="date"
+  />
+
+  <input
+    type="text"
+    placeholder="Notes"
+    [(ngModel)]="notes"
+  />
+
+  <select [(ngModel)]="type">
+    <option value="income">Income</option>
+    <option value="expense">Expense</option>
+  </select>
+
+  <button (click)="addTransaction()">
+    Add Transaction
+  </button>
+
+</div>
