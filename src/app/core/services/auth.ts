@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -13,12 +14,12 @@ import { auth } from '../firebase/firebase.config';
 })
 export class AuthService {
 
-  currentUser: User | null = null;
+  private userSubject = new BehaviorSubject<User | null>(null);
+  user$ = this.userSubject.asObservable();
 
   constructor() {
-    // Track auth state globally
     onAuthStateChanged(auth, (user) => {
-      this.currentUser = user;
+      this.userSubject.next(user);
     });
   }
 
@@ -37,8 +38,13 @@ export class AuthService {
     return signOut(auth);
   }
 
-  // 👤 Get current user
+  // 👤 Sync getter (safe after init)
   getUser() {
-    return this.currentUser;
+    return this.userSubject.value;
+  }
+
+  // 🔐 Better guard support
+  isLoggedIn() {
+    return !!this.userSubject.value;
   }
 }

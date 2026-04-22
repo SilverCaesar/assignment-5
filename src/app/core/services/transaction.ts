@@ -23,10 +23,14 @@ export class TransactionService {
   private collectionName = 'transactions';
 
   // ➕ CREATE
-  addTransaction(transaction: Transaction) {
-    const ref = collection(db, this.collectionName);
-    return addDoc(ref, transaction);
-  }
+  addTransaction(transaction: Transaction, userId: string) {
+  const ref = collection(db, this.collectionName);
+
+  return addDoc(ref, {
+    ...transaction,
+    userId
+  });
+}
 
   // 📥 READ (one-time fetch)
   async getTransactionsOnce(userId: string): Promise<Transaction[]> {
@@ -35,10 +39,7 @@ export class TransactionService {
 
     const snapshot = await getDocs(q);
 
-    return snapshot.docs.map(doc => ({
-      id: doc.id,
-      ...doc.data()
-    })) as Transaction[];
+    return this.mapSnapshot(snapshot);
   }
 
   // 📡 REAL-TIME READ (optional but powerful for dashboard)
@@ -47,11 +48,8 @@ export class TransactionService {
     const q = query(ref, where('userId', '==', userId));
 
     return onSnapshot(q, (snapshot) => {
-      const data = snapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      })) as Transaction[];
-
+      const data = this.mapSnapshot(snapshot);
+      
       callback(data);
     });
   }
@@ -67,4 +65,11 @@ export class TransactionService {
     const ref = doc(db, this.collectionName, id);
     return deleteDoc(ref);
   }
+
+  private mapSnapshot(snapshot: any): Transaction[] {
+  return snapshot.docs.map((doc: any) => ({
+    id: doc.id,
+    ...doc.data()
+  })) as Transaction[];
+}
 }

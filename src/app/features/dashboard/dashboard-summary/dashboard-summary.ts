@@ -14,6 +14,7 @@ import { Transaction } from '../../../shared/models/transaction';
 export class DashboardSummaryComponent implements OnInit {
 
   transactions: Transaction[] = [];
+  categoryTotals: { [key: string]: number } = {};
 
   totalIncome = 0;
   totalExpense = 0;
@@ -28,25 +29,33 @@ export class DashboardSummaryComponent implements OnInit {
     const user = this.auth.getUser();
     if (!user) return;
 
-    this.transactionService.getTransactionsOnce(user.uid)
-      .then(data => {
+    this.transactionService
+      .getTransactionsRealtime(user.uid, (data) => {
         this.transactions = data;
         this.calculateSummary();
       });
   }
 
   calculateSummary() {
-    this.totalIncome = 0;
-    this.totalExpense = 0;
+  this.totalIncome = 0;
+  this.totalExpense = 0;
+  this.categoryTotals = {};
 
-    this.transactions.forEach(t => {
-      if (t.type === 'income') {
-        this.totalIncome += Number(t.amount);
-      } else {
-        this.totalExpense += Number(t.amount);
-      }
-    });
+  for (const t of this.transactions) {
 
-    this.balance = this.totalIncome - this.totalExpense;
+    const amount = Number(t.amount) || 0;
+    const category = t.category || 'Uncategorized';
+
+    if (t.type === 'income') {
+      this.totalIncome += amount;
+    } else {
+      this.totalExpense += amount;
+    }
+
+    this.categoryTotals[category] =
+      (this.categoryTotals[category] || 0) + amount;
   }
+
+  this.balance = this.totalIncome - this.totalExpense;
+}
 }

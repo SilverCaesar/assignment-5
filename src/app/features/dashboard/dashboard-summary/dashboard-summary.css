@@ -1,22 +1,36 @@
-.summary {
+.summary-cards {
   display: flex;
-  gap: 10px;
+  gap: 15px;
   margin-bottom: 20px;
 }
 
 .card {
-  padding: 15px;
-  border-radius: 8px;
-  background: #f5f5f5;
   flex: 1;
+  padding: 15px;
+  border-radius: 10px;
   text-align: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
 
-.income { border-left: 5px solid green; }
-.expense { border-left: 5px solid red; }
-.balance { border-left: 5px solid blue; }
+.income {
+  background: #e8f5e9;
+}
 
-.transaction-card {
-  padding: 10px;
-  border-bottom: 1px solid #ddd;
+.expense {
+  background: #ffebee;
+}
+
+.balance {
+  background: #e3f2fd;
+}
+
+.card h3 {
+  margin: 0;
+  font-size: 14px;
+  color: gray;
+}
+
+.card p {
+  font-size: 22px;
+  font-weight: bold;
 }

@@ -1,5 +1,8 @@
-<h1>Expense Tracker Dashboard</h1>
+<hr />
+<canvas id="categoryChart"></canvas>
+<!-- Dashboard widgets render here -->
+<app-dashboard-summary></app-dashboard-summary>
 
-<p>Welcome to your dashboard</p>
+<router-outlet></router-outlet>
 
 <button (click)="logout()">Logout</button>

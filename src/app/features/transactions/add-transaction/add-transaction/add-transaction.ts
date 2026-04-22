@@ -26,35 +26,33 @@ export class AddTransactionComponent {
   ) {}
 
   addTransaction() {
-    const user = this.auth.getUser();
+  const user = this.auth.getUser();
 
-    if (!user) {
-      console.error('User not logged in');
-      return;
-    }
-
-    const transaction: Transaction = {
-      amount: this.amount,
-      category: this.category,
-      date: this.date,
-      notes: this.notes,
-      type: this.type,
-      userId: user.uid
-    };
-
-    this.transactionService.addTransaction(transaction)
-      .then(() => {
-        console.log('Transaction added successfully');
-
-        // reset form
-        this.amount = 0;
-        this.category = '';
-        this.date = '';
-        this.notes = '';
-        this.type = 'expense';
-      })
-      .catch(err => {
-        console.error('Error adding transaction:', err);
-      });
+  if (!user) {
+    console.error('User not logged in');
+    return;
   }
+
+  const uid = user.uid;
+
+  const transaction: Transaction = {
+    amount: this.amount,
+    category: this.category,
+    date: this.date,
+    notes: this.notes,
+    type: this.type,
+    userId: uid
+  };
+
+  this.transactionService.addTransaction(transaction, uid)
+    .then(() => {
+      console.log('Transaction added successfully');
+
+      this.amount = 0;
+      this.category = '';
+      this.date = '';
+      this.notes = '';
+      this.type = 'expense';
+    });
+}
 }

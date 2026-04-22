@@ -1,20 +1,20 @@
 <h2>Dashboard Summary</h2>
 
-<div class="summary">
+<div class="summary-cards">
 
   <div class="card income">
-    <h3>Total Income</h3>
-    <p>{{ totalIncome }}</p>
+    <h3>Income</h3>
+    <p>${{ totalIncome }}</p>
   </div>
 
   <div class="card expense">
-    <h3>Total Expense</h3>
-    <p>{{ totalExpense }}</p>
+    <h3>Expenses</h3>
+    <p>${{ totalExpense }}</p>
   </div>
 
   <div class="card balance">
     <h3>Balance</h3>
-    <p>{{ balance }}</p>
+    <p>${{ balance }}</p>
   </div>
 
 </div>
@@ -24,14 +24,12 @@
 <h3>Recent Transactions</h3>
 
 @if (transactions.length === 0) {
-  <p>No data available</p>
-}
-
-@for (t of transactions; track t.id) {
-  <div class="transaction-card">
-
-    <p><strong>{{ t.category }}</strong></p>
-    <p>{{ t.amount }} - {{ t.type }}</p>
-
-  </div>
+  <p>No transactions available</p>
+} @else {
+  @for (t of transactions.slice(0,5); track t.id) {
+    <div class="transaction-card">
+      <span>{{ t.category }}</span>
+      <span>{{ t.amount }}</span>
+    </div>
+  }
 }
