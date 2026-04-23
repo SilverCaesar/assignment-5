@@ -28,3 +28,59 @@
   }
 
 </div>
+@if (selectedTransaction) {
+
+  <mat-card class="edit-card">
+
+    <div class="edit-header">
+      <h3>Edit Transaction</h3>
+      <button mat-icon-button (click)="selectedTransaction = null">
+        ✕
+      </button>
+    </div>
+
+    <div class="edit-grid">
+
+      <mat-form-field appearance="outline">
+        <mat-label>Amount</mat-label>
+        <input matInput type="number" [(ngModel)]="selectedTransaction.amount">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Category</mat-label>
+        <input matInput [(ngModel)]="selectedTransaction.category">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Date</mat-label>
+        <input matInput type="date" [(ngModel)]="selectedTransaction.date">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Notes</mat-label>
+        <input matInput [(ngModel)]="selectedTransaction.notes">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Type</mat-label>
+        <mat-select [(ngModel)]="selectedTransaction.type">
+          <mat-option value="income">Income</mat-option>
+          <mat-option value="expense">Expense</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+    </div>
+
+    <div class="edit-actions">
+      <button mat-raised-button color="primary" (click)="updateTransaction()">
+        Save Changes
+      </button>
+
+      <button mat-button (click)="selectedTransaction = null">
+        Cancel
+      </button>
+    </div>
+
+  </mat-card>
+
+}

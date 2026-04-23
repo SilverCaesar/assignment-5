@@ -5,11 +5,12 @@ import { FormsModule } from '@angular/forms';
 import { TransactionService } from '../../../../core/services/transaction';
 import { AuthService } from '../../../../core/services/auth';
 import { Transaction } from '../../../../shared/models/transaction';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-add-transaction',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule,RouterLink],
   templateUrl: './add-transaction.html',
   styleUrls: ['./add-transaction.css']
 })

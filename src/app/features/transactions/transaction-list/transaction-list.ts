@@ -11,11 +11,16 @@ import { ChangeDetectorRef } from '@angular/core';
 
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field'
+import { MatLabel } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select'
+
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-transaction-list',
   standalone: true,
-  imports: [CommonModule, FormsModule, MatCardModule, MatButtonModule],
+  imports: [CommonModule, FormsModule, MatCardModule, MatButtonModule,RouterLink, MatFormFieldModule, MatLabel, MatSelectModule ],
   templateUrl: './transaction-list.html',
   styleUrls: ['./transaction-list.css']
 })
@@ -77,14 +82,24 @@ ngOnInit() {
   }
 
   updateTransaction() {
-    if (!this.selectedTransaction?.id) return;
+      if (!this.selectedTransaction?.id) return;
 
-    const { id, ...data } = this.selectedTransaction;
+  const { id, ...data } = this.selectedTransaction;
 
-    this.transactionService.updateTransaction(id, data)
-      .then(() => {
-        this.selectedTransaction = null;
-      });
+  this.transactionService.updateTransaction(id, data)
+    .then(() => {
+
+      const index = this.transactions.findIndex(t => t.id === id);
+
+      if (index !== -1) {
+        this.transactions[index] = {
+          ...this.transactions[index],
+          ...data
+        };
+      }
+
+      this.selectedTransaction = null;
+    });
   }
 
   cancelEdit() {
