@@ -34,3 +34,67 @@
   font-size: 22px;
   font-weight: bold;
 }
+
+.section-title {
+  margin-top: 20px;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+/* container */
+.transaction-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* card */
+.transaction-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 12px 14px;
+  background: white;
+  border-radius: 10px;
+
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  transition: 0.2s;
+}
+
+.transaction-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+/* left side */
+.tx-category {
+  font-weight: 600;
+  color: #333;
+}
+
+.tx-date {
+  font-size: 12px;
+  color: #888;
+}
+
+/* right side */
+.tx-amount {
+  font-weight: 600;
+  font-size: 15px;
+}
+
+/* income vs expense */
+.income {
+  color: #2e7d32;
+}
+
+.expense {
+  color: #c62828;
+}
+
+/* empty state */
+.empty-state {
+  color: #888;
+  font-style: italic;
+}

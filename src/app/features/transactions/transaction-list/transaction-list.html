@@ -1,49 +1,30 @@
-<h2>Your Transactions</h2>
+<button routerLink="/dashboard" class="back-btn">
+  ← Back to Dashboard
+</button>
 
-@if (transactions.length === 0) {
-  <p>No transactions found.</p>
-}
+<div class="transaction-list">
 
-@for (t of transactions; track t.id) {
-  <div class="card">
+  <h2>Transactions</h2>
 
-    <p><strong>Amount:</strong> {{ t.amount }}</p>
-    <p><strong>Category:</strong> {{ t.category }}</p>
-    <p><strong>Date:</strong> {{ t.date }}</p>
-    <p><strong>Notes:</strong> {{ t.notes }}</p>
-    <p><strong>Type:</strong> {{ t.type }}</p>
+  @for (t of transactions; track t.id) {
+    <mat-card class="transaction-card">
 
-    <button (click)="editTransaction(t)">
-      Edit
-    </button>
+      <div class="row">
+        <span class="cat">{{ t.category }}</span>
+        <span class="amount">{{ t.amount }}</span>
+      </div>
 
-    <button (click)="deleteTransaction(t.id!)">
-      Delete
-    </button>
+      <div class="meta">
+        <small>{{ t.date }}</small>
+        <small>{{ t.type }}</small>
+      </div>
 
-  </div>
-}
+      <div class="actions">
+        <button mat-button (click)="editTransaction(t)">Edit</button>
+        <button mat-button color="warn" (click)="deleteTransaction(t.id!)">Delete</button>
+      </div>
 
-<hr />
+    </mat-card>
+  }
 
-@if (selectedTransaction) {
-  <h3>Edit Transaction</h3>
-
-  <input type="number" [(ngModel)]="selectedTransaction.amount" />
-  <input type="text" [(ngModel)]="selectedTransaction.category" />
-  <input type="date" [(ngModel)]="selectedTransaction.date" />
-  <input type="text" [(ngModel)]="selectedTransaction.notes" />
-
-  <select [(ngModel)]="selectedTransaction.type">
-    <option value="income">Income</option>
-    <option value="expense">Expense</option>
-  </select>
-
-  <button (click)="updateTransaction()">
-    Save Changes
-  </button>
-
-  <button (click)="selectedTransaction = null">
-    Cancel
-  </button>
-}
+</div>

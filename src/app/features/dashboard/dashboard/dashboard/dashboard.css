@@ -1,6 +1,79 @@
-.alert {
-  padding: 10px;
-  margin: 5px 0;
-  background: #fff3cd;
-  border-left: 5px solid #ff9800;
+.dashboard {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background: #f5f7fb;
+}
+
+.nav-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 12px 18px;
+  background: #ffffff;
+
+  border-radius: 14px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+/* logo */
+.logo {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #1976d2;
+}
+
+/* center nav */
+.nav-center {
+  display: flex;
+  gap: 10px;
+  background: #f1f3f5;
+  padding: 6px;
+  border-radius: 12px;
+}
+
+/* buttons become pills */
+.nav-center button {
+  border: none;
+  background: transparent;
+  padding: 8px 14px;
+  border-radius: 10px;
+
+  cursor: pointer;
+  font-weight: 500;
+  color: #555;
+  transition: 0.2s;
+}
+
+.nav-center button:hover {
+  background: white;
+  color: #1976d2;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+/* active route */
+.nav-center button.active {
+  background: #1976d2;
+  color: white;
+}
+
+/* logout button */
+.logout {
+  background: #ffebee;
+  color: #d32f2f;
+
+  border: none;
+  padding: 8px 14px;
+  border-radius: 10px;
+
+  cursor: pointer;
+  font-weight: 500;
+  transition: 0.2s;
+}
+
+.logout:hover {
+  background: #ffcdd2;
 }

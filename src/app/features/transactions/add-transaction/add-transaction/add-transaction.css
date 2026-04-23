@@ -16,3 +16,17 @@ button {
   color: white;
   border: none;
 }
+
+.back-btn {
+  background: #1976d2;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-bottom: 12px;
+}
+
+.back-btn:hover {
+  background: #125aa0;
+}

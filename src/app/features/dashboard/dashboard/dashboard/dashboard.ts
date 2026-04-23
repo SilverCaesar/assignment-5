@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { AuthService } from '../../../../core/services/auth';
 import { TransactionService } from '../../../../core/services/transaction';
@@ -8,13 +8,23 @@ import { BudgetService } from '../../../../core/services/budget';
 
 import { Chart } from 'chart.js/auto';
 import { DashboardSummaryComponent } from '../../dashboard-summary/dashboard-summary';
+
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
+
+import { DecimalPipe } from '@angular/common';
+
+
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [RouterOutlet, RouterLink, DashboardSummaryComponent],
-  templateUrl: './dashboard.html'
+  imports: [RouterOutlet, RouterLink, DashboardSummaryComponent, MatCardModule, MatButtonModule, DecimalPipe],
+  templateUrl: './dashboard.html',
+  styleUrls: ['./dashboard.css']
 })
 export class DashboardComponent implements OnInit {
+  @ViewChild('chartCanvas') chartCanvas!: ElementRef;
+  @ViewChild('incomeExpenseCanvas') incomeExpenseCanvas!: ElementRef;
 
   dataReady = false;
 
@@ -23,6 +33,7 @@ export class DashboardComponent implements OnInit {
   budgetWarnings: string[] = [];
 
   chart: any;
+  incomeExpenseChart: any;
   
 
   transactions: Transaction[] = [];
@@ -40,7 +51,7 @@ export class DashboardComponent implements OnInit {
     private budgetService: BudgetService
   ) {}
 
-  ngOnInit() {
+ngOnInit() {
   const user = this.auth.getUser();
   if (!user) return;
 
@@ -53,10 +64,16 @@ export class DashboardComponent implements OnInit {
     this.budgets = budgets;
 
     this.calculateSummary();
-    this.dataReady = true;
+
+    // wait for view + data
+    setTimeout(() => {
+      this.createChart();
+      this.createIncomeExpenseChart();
+    });
 
   });
 }
+
 
   logout() {
     this.auth.logout().then(() => {
@@ -106,31 +123,65 @@ export class DashboardComponent implements OnInit {
 
     });
 
-    this.createChart();
   }
 
   createChart() {
+  if (!this.chartCanvas) return;
+
   const labels = Object.keys(this.categoryTotals);
   const data = Object.values(this.categoryTotals);
 
-  if (!this.transactions.length) return;
+  if (this.chart) {
+    this.chart.destroy();
+  }
 
-  const canvas = document.getElementById('categoryChart') as HTMLCanvasElement;
-  if (!canvas) return;
+  const ctx = this.chartCanvas.nativeElement.getContext('2d');
 
-  this.chart = new Chart('categoryChart', {
+  if (!ctx) return;
+
+  this.chart = new Chart(ctx, {
     type: 'pie',
     data: {
-      labels: labels,
-      datasets: [
-        {
-          data: data
-        }
-      ]
+      labels,
+      datasets: [{ data }]
     },
     options: {
       responsive: true
     }
   });
 }
+
+createIncomeExpenseChart() {
+  if (!this.incomeExpenseCanvas) return;
+
+  if (this.incomeExpenseChart) {
+    this.incomeExpenseChart.destroy();
+  }
+
+  const ctx = this.incomeExpenseCanvas.nativeElement.getContext('2d');
+
+  if (!ctx) return;
+
+  this.incomeExpenseChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['Income', 'Expense'],
+      datasets: [
+        {
+          data: [this.totalIncome, this.totalExpense]
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          display: false
+        }
+      }
+    }
+  });
+}
+
+
 }

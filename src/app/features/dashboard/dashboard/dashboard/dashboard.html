@@ -1,8 +1,64 @@
-<hr />
-<canvas id="categoryChart"></canvas>
-<!-- Dashboard widgets render here -->
-<app-dashboard-summary></app-dashboard-summary>
+<nav class="nav-bar">
 
-<router-outlet></router-outlet>
+  <div class="nav-left">
+    <h2 class="logo">Expense Tracker</h2>
+  </div>
 
-<button (click)="logout()">Logout</button>
+  <div class="nav-center">
+    <button routerLink="/dashboard" routerLinkActive="active">Dashboard</button>
+    <button routerLink="/add-transaction" routerLinkActive="active">Add</button>
+    <button routerLink="/transactions" routerLinkActive="active">Transactions</button>
+  </div>
+
+  <div class="nav-right">
+    <button (click)="logout()" class="logout">Logout</button>
+  </div>
+
+</nav>
+
+<div class="dashboard">
+
+  <!-- HEADER -->
+  <h2 class="title">Dashboard Overview</h2>
+
+  <!-- SUMMARY -->
+  <section class="summary-cards">
+
+    <mat-card class="card income">
+      <h3>Income</h3>
+      <p>{{ totalIncome | number:'1.0-0' }}</p>
+    </mat-card>
+
+    <mat-card class="card expense">
+      <h3>Expense</h3>
+      <p>{{ totalExpense | number:'1.0-0' }}</p>
+    </mat-card>
+
+    <mat-card class="card balance">
+      <h3>Balance</h3>
+      <p>{{ balance | number:'1.0-0' }}</p>
+    </mat-card>
+
+  </section>
+
+  <!-- CHARTS -->
+  <section class="charts">
+
+    <mat-card class="chart-card">
+      <h3>Category Spending</h3>
+      <canvas #chartCanvas></canvas>
+    </mat-card>
+
+    <mat-card class="chart-card">
+      <h3>Income vs Expense</h3>
+      <canvas #incomeExpenseCanvas></canvas>
+    </mat-card>
+
+  </section>
+
+  <!-- SUMMARY -->
+  <mat-card class="summary-card">
+    <app-dashboard-summary></app-dashboard-summary>
+  </mat-card>
+
+</div>

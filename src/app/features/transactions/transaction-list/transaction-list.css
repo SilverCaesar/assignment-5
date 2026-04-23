@@ -1,14 +1,29 @@
 .card {
-  border: 1px solid #ccc;
-  padding: 10px;
+  border: 1px solid #ddd;
+  padding: 12px;
   margin-bottom: 10px;
-  border-radius: 6px;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.card p {
+  margin: 4px 0;
 }
 
 button {
-  background: red;
+  margin-right: 8px;
+}
+
+.back-btn {
+  background: #1976d2;
   color: white;
   border: none;
-  padding: 6px 10px;
+  padding: 8px 14px;
+  border-radius: 6px;
   cursor: pointer;
+  margin-bottom: 12px;
+}
+
+.back-btn:hover {
+  background: #125aa0;
 }

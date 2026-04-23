@@ -9,7 +9,8 @@ import { Transaction } from '../../../shared/models/transaction';
   selector: 'app-dashboard-summary',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './dashboard-summary.html'
+  templateUrl: './dashboard-summary.html',
+  styleUrls: ['./dashboard-summary.css']
 })
 export class DashboardSummaryComponent implements OnInit {
 

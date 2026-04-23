@@ -10,7 +10,8 @@ import { Transaction } from '../../../../shared/models/transaction';
   selector: 'app-add-transaction',
   standalone: true,
   imports: [CommonModule, FormsModule],
-  templateUrl: './add-transaction.html'
+  templateUrl: './add-transaction.html',
+  styleUrls: ['./add-transaction.css']
 })
 export class AddTransactionComponent {
 

@@ -6,12 +6,14 @@
 // custom components at https://material.angular.dev/guide/theming
 @use '@angular/material' as mat;
 
+@include mat.core();
+
 html {
   height: 100%;
   @include mat.theme((
     color: (
-      primary: mat.$magenta-palette,
-      tertiary: mat.$violet-palette,
+      primary: mat.$rose-palette,
+      tertiary: mat.$red-palette,
     ),
     typography: Roboto,
     density: 0,
@@ -35,3 +37,4 @@ body {
   margin: 0;
   height: 100%;
 }
+

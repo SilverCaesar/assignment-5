@@ -17,12 +17,14 @@ export class AuthService {
   private userSubject = new BehaviorSubject<User | null>(null);
   user$ = this.userSubject.asObservable();
 
-  constructor() {
-    onAuthStateChanged(auth, (user) => {
-      this.userSubject.next(user);
-    });
-  }
+constructor() {
+  console.log('🔥 AUTH SERVICE INSTANCE CREATED');
 
+  onAuthStateChanged(auth, (user) => {
+    console.log('🔥 GLOBAL AUTH STATE:', user);
+    this.userSubject.next(user);
+  });
+}
   // 🔥 Register
   register(email: string, password: string) {
     return createUserWithEmailAndPassword(auth, email, password);
